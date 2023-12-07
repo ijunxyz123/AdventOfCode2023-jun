@@ -6,6 +6,10 @@ MacBook Pro
 - M2 Chip
 - 16 GB of memory.
 
+gawk
+- GNU Awk 5.3.0, API 4.0, (GNU MPFR 4.2.0-p12, GNU MP 6.3.0)
+- Installed using brew
+
 Part 2:
   Start: Tue Dec  5 23:27:47 EST 2023
   Solution found: Thu Dec  7 07:59:04 EST 2023 (1,566,000 approximate iterations)
