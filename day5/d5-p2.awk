@@ -16,8 +16,10 @@ BEGIN {
 
 # Process the seed input
 /^seeds:/ {
-    for (i=2;i<=NF;i++) {
-        SEEDLIST[$i]=1
+    for (i=2;i<=NF;i=i+2) {
+        SeedListCount++
+        SEEDLISTLOW[SeedListCount]=$i
+        SEEDLISTHIGH[SeedListCount]=$i+$(i+1)-1
     }
 }
 
@@ -69,18 +71,26 @@ END {
         }
     }
 
-    LowestLocation=9999999999
-    for (i in SEEDLIST) {
-        # print "SEED ",i
-        Solution=i
-        for (j=1;j<=7;j++) {
-            Solution=ResolveMap(j,Solution)
-            # print "MAP ",j," SOL ",Solution
-        }
-        print "SEED# '" i "' LOCATION# '" Solution "'"
-        if ( LowestLocation>Solution) { 
-            LowestLocation=Solution
-            print "Lowest Location: " LowestLocation
+    LowestLocation=2^32
+    Clunker=0
+    Junker=0
+    # Each Seed List
+    for (i=1;i<=SeedListCount;i++) {
+        # Get a seed
+        for (j=SEEDLISTLOW[i];j<=SEEDLISTHIGH[i];j++) {
+            # print "SEED ",j
+            Solution=j
+            for (k=1;k<=7;k++) {
+                Solution=ResolveMap(k,Solution)
+                # print "MAP ",k," SOL ",Solution
+            }
+            # print "SEED# '" j "' LOCATION# '" Solution "'"
+            if ( LowestLocation>Solution) { 
+                LowestLocation=Solution
+                print strftime() " LOW " SEEDLISTLOW[i] " SEED " j " HIGH " SEEDLISTHIGH[i]" Lowest Location: " LowestLocation
+            }
+            Clunker++
+            if (Clunker>1000000) { Clunker=0; print strftime() " -- MARK -- " ++Junker }
         }
     }
     print "Lowest Location: " LowestLocation
