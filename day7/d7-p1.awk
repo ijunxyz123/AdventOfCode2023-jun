@@ -8,9 +8,10 @@ BEGIN {
         if (i==14) Card="A"
 
         CARD[Card]=i
+        # Not sure I'm going to actually use this
         STRENGTH[Card]=2^(i-2)
 
-        print i,Card,CARD[Card],STRENGTH[Card]
+        # print i,Card,CARD[Card],STRENGTH[Card]
     }
 }
 
@@ -19,6 +20,8 @@ BEGIN {
     Bet=$2
     HandA=""
     delete COUNT
+    # Hand is the actual text hand in original order
+    # HandA is it converted to numbers (original order)
     for (i=1;i<=5;i++) {
         CC=substr(Hand,i,1)
         if (HandA=="") {
@@ -32,36 +35,88 @@ BEGIN {
         }
         COUNT[CC]++
     }
+    # Three of a kind?
     ThreeFlag=0
+    # Number of pairs?
     TwoFlag=0
+    # Type of hand
+    Type=0
     for (i in COUNT) {
+        # Found a three
         if (COUNT[i]==3) {
             ThreeFlag=1
         }
+        # Found a two 
         if (COUNT[i]==2) {
             TwoFlag++
         }
+        # 5
         if (COUNT[i]==5) {
-            print "5 of  kind"
+            what="5 of a kind"
+            Type=7
         }
+        # 4
         if (COUNT[i]==4) {
-            print "4 of a kind"
+            what="4 of a kind"
+            Type=6
         }
     }
+    # This code tests for Full House (3+2) and three of a kind (3+1+1)
     if ( ThreeFlag ) {
         if ( TwoFlag ) {
-            print "Full house"
+            what="Full house"
+            Type=5
         } else {
-            print "Three of a kind"
+            what="Three of a kind"
+            Type=4
         }
+    # Invoked when the only options left involve pairs
     } else {
         if ( TwoFlag==2 ) {
-            print "Two Pair"
+            what="Two Pair"
+            Type=3
         }
         if ( TwoFlag==1 ) {
-            print "One Pair"
+            what="One Pair"
+            Type=2
+        }
+        if ( TwoFlag==0 ) {
+            what="High Card"
+            Type=1
         }
     }
 
-    print $1,HandA
+    HAND[NR]=HandA "," Type "," Hand "," Bet "," NR "," what
+
+    # print $1,HandA,Type
+
+}
+
+END {
+    # Sort by hand type
+    SortFinished=0
+    for (; SortFinished==0 ;) {
+        SortFinished=1
+        for (i=1;i<NR;i++) {
+            print i,"TEST",HAND[i],HAND[i+1]
+            split(HAND[i],WOW,",")
+            split(HAND[i+1],ZER,",")
+            if ( WOW[6]>ZER[6]) {
+                SortFinished=0
+                TA=HAND[i]
+                TB=HAND[i+1]
+                HAND[i]=TB
+                HAND[i+1]=TA
+                print "SWAP"
+            }
+        }
+    }
+    for (i=1;i<=NR;i++) {
+        print i " " HAND[i] 
+    }
+
+    function SortThing(sta) {
+        
+    }
+
 }
