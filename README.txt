@@ -1,10 +1,10 @@
-AdventOfCode2023 Repo 
+README.txt AdventOfCode2023 Repo 
 
 Now with more cowbell! 
 Do you have an AoC++ badge? You should get one. Builds bodies 12 strong ways.
 
 Damarcus Jones Sr  (facebookdev80@gmail.com)
-Mastodon: @fuzzface@epsilon-ix.masto.host
+Jones Technology Foundation 
 engineering 
 ---
 
