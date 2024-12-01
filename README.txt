@@ -3,9 +3,9 @@ AdventOfCode2023 Repo
 Now with more cowbell! 
 Do you have an AoC++ badge? You should get one. Builds bodies 12 strong ways.
 
-John "FuzzFace" McMahon (john@mcmahon.engineering)
+Damarcus Jones Sr  (facebookdev80@gmail.com)
 Mastodon: @fuzzface@epsilon-ix.masto.host
-
+engineering 
 ---
 
 They used to say if man could fly, he'd have wings.
